@@ -61,7 +61,7 @@ nav.tabs{margin-left:auto;display:flex;background:var(--card);border:1px solid v
 #legend{position:absolute;z-index:1000;left:16px;bottom:16px;background:rgba(18,26,43,.92);
   border:1px solid var(--line2);border-radius:10px;padding:9px 12px;font-size:.72rem;color:var(--muted);line-height:1.7}
 #legend .f{color:var(--rose)}#legend .t{color:var(--acc2)}#legend .g{color:#94a3b8}
-#legend .h{color:var(--ok)}#legend .ha{color:var(--warn)}
+#legend .h{color:var(--ok)}#legend .ha{color:var(--warn)}#legend .r{color:var(--warn)}
 .leaflet-popup-content-wrapper,.leaflet-popup-tip{background:var(--card);color:var(--text);
   border-radius:10px;box-shadow:var(--shadow)}
 .leaflet-popup-content{font-family:var(--font)}
@@ -187,7 +187,7 @@ details[open] .caret{transform:rotate(90deg)}
     <div class="note" id="p-note"></div>
   </div>
   <div id="legend">— <span class="f">перелёт</span> · — <span class="t">поезд</span> · - - <span class="g">трансфер</span><br>
-    ● <span class="t">достопримечательность</span> · ■ <span class="h">отель в смете</span> · □ <span class="ha">альтернатива</span></div>
+    ● <span class="t">достопримечательность</span> · ■ <span class="h">отель в смете</span> · □ <span class="ha">альтернатива</span> · - · <span class="r">маршрут посещения, дни 1→16</span></div>
 </div>
 
 <div id="planTab"><div class="wrap"><div id="days"></div></div></div>
@@ -285,6 +285,22 @@ DATA.legs.forEach(leg=>{
   const link = leg.link ? `<br><a href="${leg.link}" target="_blank" rel="noopener">купить / проверить ↗</a>` : '';
   l.bindPopup(`<b>${leg.name}</b><br><span style="color:#8d9bb3;font-size:.82em">${leg.info}</span>${link}`);
 });
+
+/* Маршрут посещения по дням: достопримечательности, отели, аэропорты */
+const ROUTE = [
+[55.7558,37.6173],[55.9726,37.4146],[-23.4356,-46.4731],[-23.4387,-46.4759],[-23.4356,-46.4731],
+[-12.0219,-77.1143],[-13.5357,-71.9388],[-13.2567,-72.2635],[-13.2584,-72.2645],[-13.2631,-72.2686],
+[-13.1564,-72.5244],[-13.1547,-72.5257],[-13.1631,-72.545],[-13.1547,-72.5257],[-13.2631,-72.2686],
+[-13.5200,-71.9800],[-13.5167,-71.9781],[-13.5143,-71.9736],[-13.5211,-71.9757],[-13.5200,-71.9800],
+[-13.5357,-71.9388],[-12.0219,-77.1143],[-22.8100,-43.2505],[-22.9645,-43.1805],[-22.9760,-43.1910],
+[-22.9645,-43.1805],[-22.9519,-43.2105],[-22.9645,-43.1805],[-22.9492,-43.1566],[-22.9645,-43.1805],
+[-22.9180,-43.1830],[-22.9151,-43.1791],[-22.9645,-43.1805],[-22.8100,-43.2505],[-25.5961,-54.4872],
+[-25.5470,-54.5880],[-25.6953,-54.4367],[-25.5470,-54.5880],[-25.6866,-54.4415],[-25.5470,-54.5880],
+[-25.5961,-54.4872],[-23.4356,-46.4731],[-23.4387,-46.4759],[-23.4356,-46.4731],[55.9726,37.4146],
+[55.7558,37.6173]
+];
+L.polyline(ROUTE, {color:'#fbbf24', weight:1.8, dashArray:'3 7', opacity:.6})
+  .addTo(map).bindTooltip('<b>Маршрут посещения: дни 1 → 16</b>', {sticky:true});
 
 /* Почасовой план */
 const byDay = {};
